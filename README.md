@@ -19,7 +19,7 @@
 }]"
 
 
-I ve tried to handle this kind of json with commented code in files:
+I ve tried to handle this json with commented code in files:
 '../../models/task.dart';
 '../useful_methods.dart/communicate_with_server.dart';
 '../ui/screens/see_task.dart';
