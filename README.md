@@ -1,16 +1,32 @@
 # to_do
 
-A new Flutter project.
+ I am not sure how to fetch data when json contains list of maps e.g  
+ "[{
+    "id": 1,
+    "todo": "Create dart server",
+    "isDone": false,
+    "description": "Create dart server using shelf packages."
+},{
+    "id": 2,
+    "todo": "Implement router",
+    "isDone": true,
+    "description": "Implement router for the request handling."
+},{
+    "id": 3,
+    "todo": "Create JSON file",
+    "isDone": false,
+    "description": "Create JSON file to parse it with request."
+}]"
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+I ve tried to handle this json with commented code in files:
+'../../models/task.dart';
+'../useful_methods.dart/communicate_with_server.dart';
+'../ui/screens/see_task.dart';
 
-A few resources to get you started if this is your first Flutter project:
+I m not sure if this code works that's why I ve commented it, 
+so if you wish to try it out you can simply uncomment everything with the header "//unComment next section"
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+ 
