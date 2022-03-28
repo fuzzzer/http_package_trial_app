@@ -38,7 +38,7 @@ Future<Task> delateTask({required String id}) async {
   final response = await http.delete(
     Uri.parse('http://0.0.0.0:8080/delete-todo/$id'),
     headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
     },
   );
 
@@ -57,7 +57,7 @@ Future<Task> createTask(
   final response = await http.post(
     Uri.parse('http://0.0.0.0:8080/add-todo'),
     headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
     },
     body: jsonEncode(
       <String, dynamic>{
@@ -84,7 +84,7 @@ Future<Task> updateTask(
   final response = await http.put(
     Uri.parse('http://0.0.0.0:8080/update-todo'),
     headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
     },
     body: jsonEncode(<String, dynamic>{
       'id': id,
