@@ -22,7 +22,7 @@ class CommandButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(117, 69, 210, 235)),
+              primary: Color.fromARGB(117, 22, 26, 23)),
           child: Text(cmd),
           onPressed: () {
             inputTextManagement

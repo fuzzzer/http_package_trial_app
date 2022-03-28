@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Color.fromARGB(255, 70, 69, 69),
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Center(child: Text(title)),

@@ -16,6 +16,7 @@ class SeeTask extends StatelessWidget {
 
             // cmd != "Get All"
             //     ?
+            
             FutureBuilder<Task>(
       future: serverCmd,
       builder: (context, snapshot) {
