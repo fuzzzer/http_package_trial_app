@@ -1,18 +1,3 @@
-// unComment next section
-
-// class TaskList {
-//   List<Task> tasksList;
-//   TaskList(this.tasksList);
-
-//   factory TaskList.fromJson(List<Map<String, dynamic>> json) {
-//     List<Task> result = [];
-//     for (int i = 0; i < json.length; i++) {
-//       result.add(Task.fromJson(json[i]));
-//     }
-//     return TaskList(result);
-//   }
-// }
-
 class Task {
   int id;
   String todo;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/schedules.dart';
-import '../../models/task.dart';
-import '../widgets/get_data_button.dart';
+import '../../data/models/schedules.dart';
+import '../../data/models/task.dart';
+import '../widgets/command_button.dart';
 
 class HomePage extends StatelessWidget {
   String title;
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inputTextManagement = Provider.of<TextManagement>(context);
+    final manager = Provider.of<TextManagement>(context);
 
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -30,35 +30,40 @@ class HomePage extends StatelessWidget {
         body: Consumer(
           builder: (context, value, child) => Column(
             children: [
-              inputTextManagement.idInput,
-              inputTextManagement.todoInput,
-              inputTextManagement.isDoneInput,
-              inputTextManagement.descriptionInput,
+              manager.idInput,
+              manager.todoInput,
+              manager.isDoneInput,
+              manager.descriptionInput,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
                     child: CommandButton(
                       cmd: "Get All",
+                      onPressedFunction: manager.getAll,
                     ),
                   ),
                   Expanded(
                       child: CommandButton(
                     cmd: "Get",
+                    onPressedFunction: manager.get,
                   )),
                   Expanded(
                     child: CommandButton(
                       cmd: "Delete",
+                      onPressedFunction: manager.delete,
                     ),
                   ),
                   Expanded(
                     child: CommandButton(
                       cmd: "Create",
+                      onPressedFunction: manager.create,
                     ),
                   ),
                   Expanded(
                     child: CommandButton(
                       cmd: "Update",
+                      onPressedFunction: manager.update,
                     ),
                   )
                 ],
