@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../ui/screens/see_task.dart';
+import 'package:to_do/data/models/task.dart';
+import 'package:to_do/ui/screens/update_task_page.dart';
+import '../../ui/screens/add_task_page.dart';
+import '../../ui/screens/see_task_page.dart';
+import '../../ui/screens/todos_start_page.dart';
 import '../../ui/widgets/is_done_button.dart';
 import '../../ui/widgets/text_input.dart';
 import '../respiratoies/communicate_with_server.dart';
 
-class TextManagement extends ChangeNotifier {
+class StateManager extends ChangeNotifier {
   String idText = "";
   String todoText = "";
   bool isDone = false;
@@ -13,7 +17,8 @@ class TextManagement extends ChangeNotifier {
   TextInput idInput = TextInput(label: "id");
   TextInput todoInput = TextInput(label: "todo");
   IsDoneButton isDoneInput = IsDoneButton();
-  TextInput descriptionInput = TextInput(label: "description");
+  TextInput descriptionInput =
+      TextInput(label: "description", relativeHeight: 1 / 5, maxLines: 50);
 
   late var serverCmd;
 
@@ -24,40 +29,47 @@ class TextManagement extends ChangeNotifier {
     descriptionText = descriptionInput.inputController.text;
   }
 
-  void goToTasksPage(context) {
+  void goToTaskPage(context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SeeTask(serverCmd: serverCmd),
+          builder: (context) => SeeTaskPage(serverCmd: serverCmd),
         ));
+    notifyListeners();
+  }
+
+  void goToHomePage(context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TodoStartPage()));
 
     notifyListeners();
   }
 
-  getAll(context) {
-    setTaskFields();
-    serverCmd = fetchTasks();
-    goToTasksPage(context);
+  void goToAddTaskPage(context, StateManager manager) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const AddTaskPage()));
+
+    notifyListeners();
   }
 
-  get(context) {
-    setTaskFields();
-    if (int.tryParse(idText) != null) {
-      serverCmd = fetchTask(id: idText);
-      goToTasksPage(context);
-    } else {
-      print("Enter desired task id");
-    }
+  void goToTaskUpdatePage(context, Task task) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UpdateTaskPage(info: task)),
+    );
+
+    notifyListeners();
   }
 
-  delete(context) {
+  get(context, getWithId) {
+    serverCmd = fetchTask(id: getWithId.toString());
+    goToTaskPage(context);
+  }
+
+  delete(context, deleteWithId) {
     setTaskFields();
-    if (int.tryParse(idText) != null) {
-      serverCmd = delateTask(id: idText);
-      goToTasksPage(context);
-    } else {
-      print("Enter id to delete");
-    }
+    serverCmd = delateTask(id: deleteWithId);
+    goToHomePage(context);
   }
 
   create(context) {
@@ -68,10 +80,14 @@ class TextManagement extends ChangeNotifier {
           todo: todoText,
           isDone: isDone,
           description: descriptionText);
-      goToTasksPage(context);
+      goToHomePage(context);
     } else {
       print("Enter id to create");
     }
+
+    idInput.inputController.clear();
+    todoInput.inputController.clear();
+    descriptionInput.inputController.clear();
   }
 
   update(context) {
@@ -82,9 +98,30 @@ class TextManagement extends ChangeNotifier {
           todo: todoText,
           isDone: isDone,
           description: descriptionText);
-      goToTasksPage(context);
+      goToTaskPage(context);
     } else {
       print("Enter id to update");
     }
+  }
+
+  isDoneChanger(Task task) {
+    if (task.isDone) {
+      task.isDone = false;
+      updateTask(
+        id: task.id,
+        todo: task.todo,
+        isDone: task.isDone,
+        description: task.description,
+      );
+    } else {
+      task.isDone = true;
+      updateTask(
+        id: task.id,
+        todo: task.todo,
+        isDone: task.isDone,
+        description: task.description,
+      );
+    }
+    notifyListeners();
   }
 }

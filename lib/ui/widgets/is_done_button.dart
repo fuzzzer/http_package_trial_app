@@ -24,37 +24,38 @@ class _IsDoneButtonState extends State<IsDoneButton> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: constraints.maxWidth * 7 / 8,
-          height: constraints.maxWidth / 10,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: widget.isDone ? Colors.green : Colors.red),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Expanded(
-                  child: Text(
-                    "isDone?",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w600),
-                  ),
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: SizedBox(
+        width: width * 7 / 8,
+        height: height / 11,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: widget.isDone ? Colors.green : Colors.red),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Expanded(
+                child: Text(
+                  "isDone?",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w600),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    widget.isDone ? "Yes" : "No",
-                    style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w600),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(
+                  widget.isDone ? "Yes" : "No",
+                  style: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w600),
                 ),
-              ],
-            ),
-            onPressed: onPressedFunction,
+              ),
+            ],
           ),
+          onPressed: onPressedFunction,
         ),
       ),
     );
