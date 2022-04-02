@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:to_do/data/models/task.dart';
+import '../../app_properies.dart';
 
 Future<List<Task>> fetchTasks() async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8080/todos'));
+  final response = await http.get(Uri.parse('http://$localHost:8080/todos'));
 
   var result = <Task>[];
 
@@ -21,7 +22,7 @@ Future<List<Task>> fetchTasks() async {
 }
 
 Future<Task> fetchTask({required String id}) async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8080/todo/$id'));
+  final response = await http.get(Uri.parse('http://$localHost:8080/todo/$id'));
 
   if (response.statusCode == 200) {
     return Task.fromJson(jsonDecode(response.body));
@@ -30,28 +31,28 @@ Future<Task> fetchTask({required String id}) async {
   }
 }
 
-Future<Task> delateTask({required String id}) async {
+Future<bool> delateTask({required String id}) async {
   final response = await http.delete(
-    Uri.parse('http://10.0.2.2:8080/delete-todo/$id'),
+    Uri.parse('http://$localHost:8080/delete-todo/$id'),
     headers: <String, String>{
       'Content-Type': 'application/json',
     },
   );
 
   if (response.statusCode == 200) {
-    return Task.fromJson(jsonDecode(response.body));
+    return true;
   } else {
-    throw Exception('Failed to delete task');
+    throw Exception('Failed to delete Task');
   }
 }
 
-Future<Task> createTask(
+Future<bool> createTask(
     {required int id,
     String todo = "No name",
     bool isDone = false,
     String description = "No description"}) async {
   final response = await http.post(
-    Uri.parse('http://10.0.2.2:8080/add-todo'),
+    Uri.parse('http://$localHost:8080/add-todo'),
     headers: <String, String>{
       'Content-Type': 'application/json',
     },
@@ -65,20 +66,20 @@ Future<Task> createTask(
     ),
   );
 
-  if (response.statusCode == 201) {
-    return Task.fromJson(jsonDecode(response.body));
+  if (response.statusCode == 200) {
+    return true;
   } else {
-    throw Exception('Failed to create task');
+    throw Exception('Failed to create Task!');
   }
 }
 
-Future<Task> updateTask(
+Future<bool> updateTask(
     {required int id,
     String todo = "No name",
     bool isDone = false,
     String description = "No description"}) async {
   final response = await http.put(
-    Uri.parse('http://10.0.2.2:8080/update-todo'),
+    Uri.parse('http://$localHost:8080/update-todo'),
     headers: <String, String>{
       'Content-Type': 'application/json',
     },
@@ -91,7 +92,7 @@ Future<Task> updateTask(
   );
 
   if (response.statusCode == 200) {
-    return Task.fromJson(jsonDecode(response.body));
+    return true;
   } else {
     throw Exception('Failed to update Task');
   }

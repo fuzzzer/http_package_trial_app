@@ -7,9 +7,9 @@ import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class SeeTaskFromServerPage extends StatelessWidget {
-  Future<Task> serverCmd;
+  Future<Task> fetchCmd;
 
-  SeeTaskFromServerPage({Key? key, required this.serverCmd}) : super(key: key);
+  SeeTaskFromServerPage({Key? key, required this.fetchCmd}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SeeTaskFromServerPage extends StatelessWidget {
       height: height,
       child: Center(
         child: FutureBuilder<Task>(
-          future: serverCmd,
+          future: fetchCmd,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {

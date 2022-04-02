@@ -18,11 +18,11 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void goToSeeTaskFromServerPage(context, var serverCmd) {
+  void goToSeeTaskFromServerPage(context, var fetchCmd) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SeeTaskFromServerPage(serverCmd: serverCmd),
+          builder: (context) => SeeTaskFromServerPage(fetchCmd: fetchCmd),
         ));
     notifyListeners();
   }
@@ -51,8 +51,8 @@ class StateManager extends ChangeNotifier {
   }
 
   get(context, int getWithId) {
-    var serverCmd = fetchTask(id: getWithId.toString());
-    goToSeeTaskFromServerPage(context, serverCmd);
+    var fetchCmd = fetchTask(id: getWithId.toString());
+    goToSeeTaskFromServerPage(context, fetchCmd);
   }
 
   void delete(context, Task info) {
@@ -103,10 +103,10 @@ class StateManager extends ChangeNotifier {
           isDone: isDone,
           description: descriptionText);
 
-      var serverCmd = fetchTask(
+      var fetchCmd = fetchTask(
         id: idText,
       );
-      goToSeeTaskFromServerPage(context, serverCmd);
+      goToSeeTaskFromServerPage(context, fetchCmd);
     } else {
       print("Enter id to update");
     }
