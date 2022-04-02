@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
-  var inputController = TextEditingController();
   String label;
   double relativeHeight;
   int maxLines;
+  String startingText;
+  late TextEditingController inputController;
   TextInput(
       {Key? key,
       this.label = "",
       this.relativeHeight = 1 / 15,
-      this.maxLines = 1})
-      : super(key: key);
+      this.maxLines = 1,
+      this.startingText = ''})
+      : super(key: key) {
+    inputController = TextEditingController(text: startingText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class TextInput extends StatelessWidget {
                   labelText: label,
                   alignLabelWithHint: true,
                   labelStyle: const TextStyle(
-                    color: Colors.black,
+                    color: Color.fromARGB(177, 93, 86, 86),
                     fontWeight: FontWeight.w400,
                   ),
                   enabledBorder: OutlineInputBorder(

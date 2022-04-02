@@ -1,39 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/data/models/task.dart';
+import 'package:to_do/data/recently_deleted_database.dart';
 import 'package:to_do/ui/screens/update_task_page.dart';
 import '../../ui/screens/add_task_page.dart';
-import '../../ui/screens/see_task_page.dart';
+import '../../ui/screens/see_deleted_task_page.dart';
+import '../../ui/screens/see_task_from_server_page.dart';
 import '../../ui/screens/todos_start_page.dart';
-import '../../ui/widgets/is_done_button.dart';
-import '../../ui/widgets/text_input.dart';
 import '../respiratoies/communicate_with_server.dart';
 
 class StateManager extends ChangeNotifier {
-  String idText = "";
-  String todoText = "";
-  bool isDone = false;
-  String descriptionText = "";
-
-  TextInput idInput = TextInput(label: "id");
-  TextInput todoInput = TextInput(label: "todo");
-  IsDoneButton isDoneInput = IsDoneButton();
-  TextInput descriptionInput =
-      TextInput(label: "description", relativeHeight: 1 / 5, maxLines: 50);
-
-  late var serverCmd;
-
-  setTaskFields() {
-    idText = idInput.inputController.text;
-    todoText = todoInput.inputController.text;
-    isDone = isDoneInput.isDone;
-    descriptionText = descriptionInput.inputController.text;
-  }
-
-  void goToTaskPage(context) {
+  void goToSeeDeletedTaskPage(context, info) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SeeTaskPage(serverCmd: serverCmd),
+          builder: (context) => SeeDeletedTaskPage(info: info),
+        ));
+    notifyListeners();
+  }
+
+  void goToSeeTaskFromServerPage(context, var serverCmd) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SeeTaskFromServerPage(serverCmd: serverCmd),
         ));
     notifyListeners();
   }
@@ -47,7 +36,7 @@ class StateManager extends ChangeNotifier {
 
   void goToAddTaskPage(context, StateManager manager) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AddTaskPage()));
+        context, MaterialPageRoute(builder: (context) => AddTaskPage()));
 
     notifyListeners();
   }
@@ -61,44 +50,63 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  get(context, getWithId) {
-    serverCmd = fetchTask(id: getWithId.toString());
-    goToTaskPage(context);
+  get(context, int getWithId) {
+    var serverCmd = fetchTask(id: getWithId.toString());
+    goToSeeTaskFromServerPage(context, serverCmd);
   }
 
-  delete(context, deleteWithId) {
-    setTaskFields();
-    serverCmd = delateTask(id: deleteWithId);
+  void delete(context, Task info) {
+    delateTask(id: info.id.toString());
     goToHomePage(context);
+    saveDeleted(info);
   }
 
-  create(context) {
-    setTaskFields();
+  void saveDeleted(Task info) {
+    deletedTasks.add(info);
+  }
+
+  create(
+    context, {
+    String idText = "",
+    String todoText = "",
+    bool isDone = false,
+    String descriptionText = "",
+  }) {
+    // this will make sure that if task already exists it wont be created again
+    fetchTask(id: idText)
+        .then((val) => print("Enter Not existent id to create"))
+        .catchError((val) {
+      if (int.tryParse(idText) != null) {
+        createTask(
+            id: int.parse(idText),
+            todo: todoText,
+            isDone: isDone,
+            description: descriptionText);
+        goToHomePage(context);
+      } else {
+        print("Enter id to create");
+      }
+    });
+  }
+
+  updateAndShow(
+    context, {
+    String idText = "",
+    String todoText = "",
+    bool isDone = false,
+    String descriptionText = "",
+  }) {
     if (int.tryParse(idText) != null) {
-      serverCmd = createTask(
+      updateTask(
           id: int.parse(idText),
           todo: todoText,
           isDone: isDone,
           description: descriptionText);
-      goToHomePage(context);
-    } else {
-      print("Enter id to create");
-    }
 
-    idInput.inputController.clear();
-    todoInput.inputController.clear();
-    descriptionInput.inputController.clear();
-  }
-
-  update(context) {
-    setTaskFields();
-    if (int.tryParse(idText) != null) {
-      serverCmd = updateTask(
-          id: int.parse(idText),
-          todo: todoText,
-          isDone: isDone,
-          description: descriptionText);
-      goToTaskPage(context);
+      var serverCmd = fetchTask(
+        id: idText,
+      );
+      goToSeeTaskFromServerPage(context, serverCmd);
     } else {
       print("Enter id to update");
     }

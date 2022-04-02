@@ -4,19 +4,24 @@ class TextOutput extends StatelessWidget {
   String name;
   String body;
   double relativeHeight; // height relative to height of the window
-  double relativeWidth = 7 / 8;
+  double relativeWidth;
   double fontSize;
   Color color;
-  Alignment alignment;
+  Alignment textAlignment;
+  FontWeight fontWeight;
+  Color backgroundColor;
 
   TextOutput(
       {Key? key,
       this.name = "",
       this.body = "",
+      this.relativeWidth = 7 / 8,
       this.relativeHeight = 1 / 15,
       this.fontSize = 15,
       this.color = Colors.black,
-      this.alignment = Alignment.centerLeft})
+      this.textAlignment = Alignment.centerLeft,
+      this.fontWeight = FontWeight.normal,
+      this.backgroundColor = const Color.fromARGB(24, 141, 129, 129)})
       : super(key: key);
 
   @override
@@ -46,12 +51,14 @@ class TextOutput extends StatelessWidget {
               height: height * relativeHeight,
               child: Container(
                 decoration: BoxDecoration(
+                    color: backgroundColor,
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: Colors.black, width: 1)),
                 child: Padding(
-                  padding: const EdgeInsets.all(3.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8),
                   child: Container(
-                    alignment: alignment,
+                    alignment: textAlignment,
                     child: Text(
                       body,
                       style: TextStyle(fontSize: fontSize, color: color),

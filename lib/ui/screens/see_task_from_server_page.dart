@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/ui/widgets/command_button.dart';
 import 'package:to_do/ui/widgets/delete_icon_button.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
-class SeeTaskPage extends StatelessWidget {
+class SeeTaskFromServerPage extends StatelessWidget {
   Future<Task> serverCmd;
 
-  SeeTaskPage({Key? key, required this.serverCmd}) : super(key: key);
+  SeeTaskFromServerPage({Key? key, required this.serverCmd}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +17,17 @@ class SeeTaskPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     final manager = Provider.of<StateManager>(context);
 
-    return Center(
-      child: FutureBuilder<Task>(
-        future: serverCmd,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return SizedBox(
-                width: width,
-                height: height,
-                child: Scaffold(
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Center(
+        child: FutureBuilder<Task>(
+          future: serverCmd,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                Task info = snapshot.data!;
+                return Scaffold(
                   appBar: AppBar(
                     backgroundColor: Colors.black,
                     actions: <Widget>[
@@ -46,12 +48,16 @@ class SeeTaskPage extends StatelessWidget {
                         ),
                       ),
                       DeleteButton(
-                          manager: manager, id: snapshot.data!.id.toString())
+                        manager: manager,
+                        id: info.id.toString(),
+                        onDeletePress: () => manager.delete(context, info),
+                      )
                     ],
                   ),
                   body: Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: Column(
+                    child: Flex(
+                      direction: Axis.vertical,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         TextOutput(
@@ -74,19 +80,19 @@ class SeeTaskPage extends StatelessWidget {
                           name: "description ",
                           body: snapshot.data!.description,
                           relativeHeight: 1 / 5,
-                          alignment: Alignment.topLeft,
+                          textAlignment: Alignment.topLeft,
                         ),
                       ],
                     ),
                   ),
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
             }
-          }
-          return const CircularProgressIndicator();
-        },
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }

@@ -7,8 +7,23 @@ import '../../data/models/task.dart';
 class ToDoTile extends StatelessWidget {
   Task info;
   double height;
+  Function onLongPressFunction;
+  Function? checkPress;
+  late bool canBeChecked;
 
-  ToDoTile({Key? key, required this.info, this.height = 20}) : super(key: key);
+  ToDoTile(
+      {Key? key,
+      required this.info,
+      this.height = 100,
+      required this.onLongPressFunction,
+      required this.checkPress})
+      : super(key: key) {
+    if (checkPress != null) {
+      canBeChecked = true;
+    } else {
+      canBeChecked = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +32,7 @@ class ToDoTile extends StatelessWidget {
       height: height,
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        onLongPress: () {
-          manager.get(context, info.id);
-        },
+        onLongPress: () => onLongPressFunction(),
         splashFactory: InkSplash.splashFactory,
         radius: 10,
         highlightColor: const Color.fromARGB(142, 95, 170, 232),
@@ -35,15 +48,18 @@ class ToDoTile extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(info.todo))),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Checkbox(
-                      checkColor: Colors.black,
-                      activeColor: const Color.fromARGB(200, 149, 219, 153),
-                      value: info.isDone,
-                      onChanged: (done) {
-                        manager.isDoneChanger(info);
-                      }))
+              canBeChecked
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Checkbox(
+                          checkColor: Colors.black,
+                          activeColor: const Color.fromARGB(200, 149, 219, 153),
+                          value: info.isDone,
+                          onChanged: (done) {
+                            checkPress!();
+                          }),
+                    )
+                  : const SizedBox.shrink()
             ],
           ),
         ),

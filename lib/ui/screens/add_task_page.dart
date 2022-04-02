@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/schedules.dart';
 import '../widgets/command_button.dart';
+import '../widgets/is_done_button.dart';
+import '../widgets/text_input.dart';
 
 class AddTaskPage extends StatelessWidget {
-  const AddTaskPage({
+  AddTaskPage({
     Key? key,
   }) : super(key: key);
+
+  TextInput idInput = TextInput(label: "id");
+  TextInput todoInput = TextInput(label: "todo");
+  TextInput descriptionInput =
+      TextInput(label: "description", relativeHeight: 1 / 5, maxLines: 50);
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +24,44 @@ class AddTaskPage extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-        ),
-        body: Consumer(
-          builder: (context, value, child) => Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  manager.idInput,
-                  manager.todoInput,
-                  manager.descriptionInput,
-                  CommandButton(
-                    cmd: "Add Task",
-                    onPressedFunction: manager.create,
-                  ),
-                ],
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+          ),
+          body: Consumer(
+            builder: (context, value, child) => Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    idInput,
+                    todoInput,
+                    descriptionInput,
+                    CommandButton(
+                        cmd: "Add Task",
+                        backgroundColor:
+                            const Color.fromARGB(210, 118, 159, 108),
+                        textColor: const Color.fromARGB(255, 5, 66, 49),
+                        onPressedFunction: () {
+                          manager.create(context,
+                              idText: idInput.inputController.text,
+                              todoText: todoInput.inputController.text,
+                              descriptionText:
+                                  descriptionInput.inputController.text);
+                        }),
+                  ],
+                ),
               ),
             ),
           ),

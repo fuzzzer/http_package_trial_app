@@ -4,6 +4,7 @@ import 'package:to_do/data/respiratoies/communicate_with_server.dart';
 import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 import '../widgets/one_todo_tile.dart';
+import '../widgets/start_page_drawer.dart';
 
 class TodoStartPage extends StatelessWidget {
   var serverCmd = fetchTasks();
@@ -20,6 +21,9 @@ class TodoStartPage extends StatelessWidget {
         width: width,
         height: height,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(backgroundColor: Colors.black),
+          drawer: StartPageDrawer(),
           body: FutureBuilder<List<Task>>(
             future: serverCmd,
             builder: (context, snapshot) {
@@ -31,10 +35,15 @@ class TodoStartPage extends StatelessWidget {
                         BuildContext context,
                         int index,
                       ) {
+                        Task info = snapshot.data![index];
                         return ListTile(
                             title: ToDoTile(
-                                info: snapshot.data![index],
-                                height: height / 10));
+                          info: info,
+                          height: height / 10,
+                          onLongPressFunction: () =>
+                              manager.get(context, info.id),
+                          checkPress: () => manager.isDoneChanger(info),
+                        ));
                       });
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");

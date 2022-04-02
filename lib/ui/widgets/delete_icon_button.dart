@@ -4,7 +4,12 @@ import '../../data/models/schedules.dart';
 class DeleteButton extends StatelessWidget {
   StateManager manager;
   String id;
-  DeleteButton({Key? key, required this.manager, required this.id})
+  Function onDeletePress;
+  DeleteButton(
+      {Key? key,
+      required this.manager,
+      required this.id,
+      required this.onDeletePress})
       : super(key: key);
 
   @override
@@ -29,7 +34,7 @@ class DeleteButton extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  manager.delete(context, id);
+                  onDeletePress();
                 },
                 child: const Text('delete',
                     style: TextStyle(
