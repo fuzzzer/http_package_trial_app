@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class ToDoTile extends StatelessWidget {
-  Task info;
+  Task taskInfo;
   double height;
   Function onLongPressFunction;
   Function? checkPress;
@@ -13,7 +12,7 @@ class ToDoTile extends StatelessWidget {
 
   ToDoTile(
       {Key? key,
-      required this.info,
+      required this.taskInfo,
       this.height = 100,
       required this.onLongPressFunction,
       required this.checkPress})
@@ -47,14 +46,14 @@ class ToDoTile extends StatelessWidget {
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(info.todo))),
+                      child: Text(taskInfo.todo))),
               canBeChecked
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Checkbox(
                           checkColor: Colors.black,
                           activeColor: const Color.fromARGB(200, 149, 219, 153),
-                          value: info.isDone,
+                          value: taskInfo.isDone,
                           onChanged: (done) {
                             checkPress!();
                           }),

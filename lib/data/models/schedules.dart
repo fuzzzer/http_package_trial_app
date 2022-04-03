@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do/data/models/task.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
 import 'package:to_do/ui/screens/update_task_page.dart';
+import 'package:to_do/ui/widgets/message_dialog.dart';
 import '../../ui/screens/add_task_page.dart';
 import '../../ui/screens/see_deleted_task_page.dart';
 import '../../ui/screens/see_task_from_server_page.dart';
@@ -9,11 +10,11 @@ import '../../ui/screens/todos_start_page.dart';
 import '../respiratoies/communicate_with_server.dart';
 
 class StateManager extends ChangeNotifier {
-  void goToSeeDeletedTaskPage(context, info) {
+  void goToSeeDeletedTaskPage(context, taskInfo) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SeeDeletedTaskPage(info: info),
+          builder: (context) => SeeDeletedTaskPage(taskInfo: taskInfo),
         ));
     notifyListeners();
   }
@@ -44,7 +45,7 @@ class StateManager extends ChangeNotifier {
   void goToTaskUpdatePage(context, Task task) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => UpdateTaskPage(info: task)),
+      MaterialPageRoute(builder: (context) => UpdateTaskPage(taskInfo: task)),
     );
 
     notifyListeners();
@@ -55,14 +56,14 @@ class StateManager extends ChangeNotifier {
     goToSeeTaskFromServerPage(context, fetchCmd);
   }
 
-  void delete(context, Task info) {
-    delateTask(id: info.id.toString());
+  void delete(context, Task taskInfo) {
+    delateTask(id: taskInfo.id.toString());
     goToHomePage(context);
-    saveDeleted(info);
+    saveDeleted(taskInfo);
   }
 
-  void saveDeleted(Task info) {
-    deletedTasks.add(info);
+  void saveDeleted(Task taskInfo) {
+    deletedTasks.add(taskInfo);
   }
 
   create(
@@ -72,9 +73,11 @@ class StateManager extends ChangeNotifier {
     bool isDone = false,
     String descriptionText = "",
   }) {
-    // this will make sure that if task already exists it wont be created again
+    // this will make sure that if task already exists it wont be created again.
+    //so new task only will be created in a case when fetchtask returns error
     fetchTask(id: idText)
-        .then((val) => print("Enter Not existent id to create"))
+        .then((val) => messageDialog(context,
+            message: "Enter Not existent id to create new todo!", answer: "OK"))
         .catchError((val) {
       if (int.tryParse(idText) != null) {
         createTask(
@@ -84,7 +87,8 @@ class StateManager extends ChangeNotifier {
             description: descriptionText);
         goToHomePage(context);
       } else {
-        print("Enter id to create");
+        messageDialog(context,
+            message: "Enter id to create new todo!", answer: "OK");
       }
     });
   }
@@ -96,20 +100,16 @@ class StateManager extends ChangeNotifier {
     bool isDone = false,
     String descriptionText = "",
   }) {
-    if (int.tryParse(idText) != null) {
-      updateTask(
-          id: int.parse(idText),
-          todo: todoText,
-          isDone: isDone,
-          description: descriptionText);
+    updateTask(
+        id: int.parse(idText),
+        todo: todoText,
+        isDone: isDone,
+        description: descriptionText);
 
-      var fetchCmd = fetchTask(
-        id: idText,
-      );
-      goToSeeTaskFromServerPage(context, fetchCmd);
-    } else {
-      print("Enter id to update");
-    }
+    var fetchCmd = fetchTask(
+      id: idText,
+    );
+    goToSeeTaskFromServerPage(context, fetchCmd);
   }
 
   isDoneChanger(Task task) {

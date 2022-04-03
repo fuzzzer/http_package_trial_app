@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
-
 import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 import 'one_todo_tile.dart';
@@ -25,7 +24,7 @@ class StartPageDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     const Text(
-                      "Recently deleted taks",
+                      "Recently deleted tasks",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 20,
@@ -42,15 +41,15 @@ class StartPageDrawer extends StatelessWidget {
                                 ) {
                                   int listMemberCoefficient =
                                       deletedTasks.length - index - 1;
-                                  Task info =
+                                  Task taskInfo =
                                       deletedTasks[listMemberCoefficient];
                                   return ListTile(
                                     title: ToDoTile(
-                                      info: info,
+                                      taskInfo: taskInfo,
                                       height: width / 4,
                                       onLongPressFunction: () =>
                                           manager.goToSeeDeletedTaskPage(
-                                              context, info),
+                                              context, taskInfo),
                                       checkPress: null,
                                     ),
                                   );

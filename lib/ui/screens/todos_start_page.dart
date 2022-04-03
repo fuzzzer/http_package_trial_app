@@ -35,14 +35,14 @@ class TodoStartPage extends StatelessWidget {
                         BuildContext context,
                         int index,
                       ) {
-                        Task info = snapshot.data![index];
+                        Task taskInfo = snapshot.data![index];
                         return ListTile(
                             title: ToDoTile(
-                          info: info,
+                          taskInfo: taskInfo,
                           height: height / 10,
                           onLongPressFunction: () =>
-                              manager.get(context, info.id),
-                          checkPress: () => manager.isDoneChanger(info),
+                              manager.get(context, taskInfo.id),
+                          checkPress: () => manager.isDoneChanger(taskInfo),
                         ));
                       });
                 } else if (snapshot.hasError) {

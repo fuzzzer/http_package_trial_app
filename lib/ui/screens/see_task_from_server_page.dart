@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do/ui/widgets/command_button.dart';
 import 'package:to_do/ui/widgets/delete_icon_button.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/schedules.dart';

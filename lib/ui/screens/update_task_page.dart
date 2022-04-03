@@ -7,8 +7,8 @@ import '../widgets/command_button.dart';
 import '../widgets/text_input.dart';
 
 class UpdateTaskPage extends StatelessWidget {
-  final Task info;
-  const UpdateTaskPage({Key? key, required this.info}) : super(key: key);
+  final Task taskInfo;
+  const UpdateTaskPage({Key? key, required this.taskInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,11 @@ class UpdateTaskPage extends StatelessWidget {
 
     TextInput todoInput = TextInput(
       label: "todo",
-      startingText: info.todo,
+      startingText: taskInfo.todo,
     );
     TextInput descriptionInput = TextInput(
         label: "description",
-        startingText: info.description,
+        startingText: taskInfo.description,
         relativeHeight: 1 / 5,
         maxLines: 50);
 
@@ -52,7 +52,7 @@ class UpdateTaskPage extends StatelessWidget {
                   children: [
                     TextOutput(
                       name: "id",
-                      body: info.id.toString(),
+                      body: taskInfo.id.toString(),
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
@@ -66,9 +66,9 @@ class UpdateTaskPage extends StatelessWidget {
                         onPressedFunction: () {
                           manager.updateAndShow(
                             context,
-                            idText: info.id.toString(),
+                            idText: taskInfo.id.toString(),
                             todoText: todoInput.inputController.text,
-                            isDone: info.isDone,
+                            isDone: taskInfo.isDone,
                             descriptionText:
                                 descriptionInput.inputController.text,
                           );

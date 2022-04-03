@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/schedules.dart';
 import '../widgets/command_button.dart';
-import '../widgets/is_done_button.dart';
 import '../widgets/text_input.dart';
 
 class AddTaskPage extends StatelessWidget {

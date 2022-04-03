@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
-import 'package:to_do/ui/widgets/command_button.dart';
-import 'package:to_do/ui/widgets/delete_icon_button.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class SeeDeletedTaskPage extends StatelessWidget {
-  Task info;
+  Task taskInfo;
 
-  SeeDeletedTaskPage({Key? key, required this.info}) : super(key: key);
+  SeeDeletedTaskPage({Key? key, required this.taskInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +29,13 @@ class SeeDeletedTaskPage extends StatelessWidget {
                 height: 5,
                 child: ElevatedButton(
                   onPressed: () {
-                    deletedTasks.remove(info);
+                    deletedTasks.remove(taskInfo);
                     manager.create(
                       context,
-                      idText: info.id.toString(),
-                      todoText: info.todo,
-                      isDone: info.isDone,
-                      descriptionText: info.description,
+                      idText: taskInfo.id.toString(),
+                      todoText: taskInfo.todo,
+                      isDone: taskInfo.isDone,
+                      descriptionText: taskInfo.description,
                     );
                   },
                   child: const Text("Recover"),
@@ -56,18 +54,18 @@ class SeeDeletedTaskPage extends StatelessWidget {
             children: <Widget>[
               TextOutput(
                 name: "id",
-                body: info.id.toString(),
+                body: taskInfo.id.toString(),
                 fontSize: 20,
               ),
-              TextOutput(name: "todo", body: info.todo, fontSize: 20),
+              TextOutput(name: "todo", body: taskInfo.todo, fontSize: 20),
               TextOutput(
                   name: "is done",
-                  body: info.isDone.toString(),
+                  body: taskInfo.isDone.toString(),
                   fontSize: 20,
-                  color: info.isDone ? Colors.green : Colors.red),
+                  color: taskInfo.isDone ? Colors.green : Colors.red),
               TextOutput(
                 name: "description ",
-                body: info.description,
+                body: taskInfo.description,
                 relativeHeight: 1 / 5,
                 textAlignment: Alignment.topLeft,
               ),
