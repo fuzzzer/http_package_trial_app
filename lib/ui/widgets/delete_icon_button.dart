@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../data/models/schedules.dart';
 
 class DeleteButton extends StatelessWidget {
-  StateManager manager;
-  String id;
-  Function onDeletePress;
-  DeleteButton(
+  final StateManager manager;
+  final String id;
+  final Function onDeletePress;
+  const DeleteButton(
       {Key? key,
       required this.manager,
       required this.id,

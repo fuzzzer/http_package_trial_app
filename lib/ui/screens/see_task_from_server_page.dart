@@ -6,9 +6,10 @@ import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class SeeTaskFromServerPage extends StatelessWidget {
-  Future<Task> fetchCmd;
+  final Future<Task> fetchCmd;
 
-  SeeTaskFromServerPage({Key? key, required this.fetchCmd}) : super(key: key);
+  const SeeTaskFromServerPage({Key? key, required this.fetchCmd})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +38,10 @@ class SeeTaskFromServerPage extends StatelessWidget {
                           width: width / 5,
                           height: 5,
                           child: ElevatedButton(
-                            onPressed: () => manager.goToTaskUpdatePage(
-                                context, snapshot.data!),
+                            onPressed: () {
+                              manager.goToTaskUpdatePage(
+                                  context, snapshot.data!);
+                            },
                             child: const Text("Edit"),
                             style: ElevatedButton.styleFrom(
                                 primary:
@@ -49,7 +52,9 @@ class SeeTaskFromServerPage extends StatelessWidget {
                       DeleteButton(
                         manager: manager,
                         id: info.id.toString(),
-                        onDeletePress: () => manager.delete(context, info),
+                        onDeletePress: () {
+                          manager.delete(context, info);
+                        },
                       )
                     ],
                   ),
@@ -89,7 +94,7 @@ class SeeTaskFromServerPage extends StatelessWidget {
                 return Text("${snapshot.error}");
               }
             }
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),

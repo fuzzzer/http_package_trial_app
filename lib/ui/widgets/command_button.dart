@@ -6,7 +6,7 @@ class CommandButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
 
-  CommandButton(
+  const CommandButton(
       {Key? key,
       this.cmd = "",
       required this.onPressedFunction,

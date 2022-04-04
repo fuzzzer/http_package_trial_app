@@ -9,9 +9,9 @@ class AddTaskPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  TextInput idInput = TextInput(label: "id");
-  TextInput todoInput = TextInput(label: "todo");
-  TextInput descriptionInput =
+  final TextInput idInput = TextInput(label: "id");
+  final TextInput todoInput = TextInput(label: "todo");
+  final TextInput descriptionInput =
       TextInput(label: "description", relativeHeight: 1 / 5, maxLines: 50);
 
   @override

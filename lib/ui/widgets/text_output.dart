@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TextOutput extends StatelessWidget {
-  String name;
-  String body;
-  double relativeHeight; // height relative to height of the window
-  double relativeWidth;
-  double fontSize;
-  Color color;
-  Alignment textAlignment;
-  FontWeight fontWeight;
-  Color backgroundColor;
+  final String name;
+  final String body;
+  final double relativeHeight; // height relative to height of the window
+  final double relativeWidth;
+  final double fontSize;
+  final Color color;
+  final Alignment textAlignment;
+  final FontWeight fontWeight;
+  final Color backgroundColor;
 
-  TextOutput(
+  const TextOutput(
       {Key? key,
       this.name = "",
       this.body = "",

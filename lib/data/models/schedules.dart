@@ -106,10 +106,7 @@ class StateManager extends ChangeNotifier {
         isDone: isDone,
         description: descriptionText);
 
-    var fetchCmd = fetchTask(
-      id: idText,
-    );
-    goToSeeTaskFromServerPage(context, fetchCmd);
+    goToHomePage(context);
   }
 
   isDoneChanger(Task task) {

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class ToDoTile extends StatelessWidget {
-  Task taskInfo;
-  double height;
-  Function onLongPressFunction;
-  Function? checkPress;
-  late bool canBeChecked;
+  final Task taskInfo;
+  final double height;
+  final Function onLongPressFunction;
+  final Function? checkPress;
+  late final bool canBeChecked;
 
   ToDoTile(
       {Key? key,
@@ -26,7 +24,6 @@ class ToDoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final manager = Provider.of<StateManager>(context);
     return SizedBox(
       height: height,
       child: InkWell(

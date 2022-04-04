@@ -6,8 +6,9 @@ import '../../data/models/task.dart';
 import 'one_todo_tile.dart';
 
 class StartPageDrawer extends StatelessWidget {
-  double drawerWidthRatio;
-  StartPageDrawer({Key? key, this.drawerWidthRatio = 2 / 3}) : super(key: key);
+  final double drawerWidthRatio;
+  const StartPageDrawer({Key? key, this.drawerWidthRatio = 2 / 3})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
-  String label;
-  double relativeHeight;
-  int maxLines;
-  String startingText;
-  late TextEditingController inputController;
+  final String label;
+  final double relativeHeight;
+  final int maxLines;
+  final String startingText;
+  late final TextEditingController inputController;
   TextInput(
       {Key? key,
       this.label = "",

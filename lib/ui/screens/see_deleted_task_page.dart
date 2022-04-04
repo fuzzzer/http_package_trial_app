@@ -6,14 +6,15 @@ import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
 
 class SeeDeletedTaskPage extends StatelessWidget {
-  Task taskInfo;
+  final Task taskInfo;
 
-  SeeDeletedTaskPage({Key? key, required this.taskInfo}) : super(key: key);
+  const SeeDeletedTaskPage({Key? key, required this.taskInfo})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     final manager = Provider.of<StateManager>(context);
 
     return SizedBox(

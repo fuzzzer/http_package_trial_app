@@ -7,7 +7,7 @@ import '../widgets/one_todo_tile.dart';
 import '../widgets/start_page_drawer.dart';
 
 class TodoStartPage extends StatelessWidget {
-  var serverCmd = fetchTasks();
+  final serverCmd = fetchAllTasks();
 
   TodoStartPage({Key? key}) : super(key: key);
 
@@ -23,7 +23,7 @@ class TodoStartPage extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(backgroundColor: Colors.black),
-          drawer: StartPageDrawer(),
+          drawer: const StartPageDrawer(),
           body: FutureBuilder<List<Task>>(
             future: serverCmd,
             builder: (context, snapshot) {
@@ -40,8 +40,9 @@ class TodoStartPage extends StatelessWidget {
                             title: ToDoTile(
                           taskInfo: taskInfo,
                           height: height / 10,
-                          onLongPressFunction: () =>
-                              manager.get(context, taskInfo.id),
+                          onLongPressFunction: () {
+                            manager.get(context, taskInfo.id);
+                          },
                           checkPress: () => manager.isDoneChanger(taskInfo),
                         ));
                       });
@@ -49,7 +50,7 @@ class TodoStartPage extends StatelessWidget {
                   return Text("${snapshot.error}");
                 }
               }
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             },
           ),
           floatingActionButton: FloatingActionButton(

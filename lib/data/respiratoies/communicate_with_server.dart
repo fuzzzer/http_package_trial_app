@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:to_do/data/models/task.dart';
-import '../../app_properies.dart';
+import '../../app_properties.dart';
 
-Future<List<Task>> fetchTasks() async {
+Future<List<Task>> fetchAllTasks() async {
   final response = await http.get(Uri.parse('http://$localHost:8080/todos'));
 
   var result = <Task>[];
