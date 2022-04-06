@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
-import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
+import '../../data/respiratoies/todo_repository.dart';
+import 'todos_start_page.dart';
 
 class SeeDeletedTaskPage extends StatelessWidget {
   final Task taskInfo;
@@ -15,7 +16,6 @@ class SeeDeletedTaskPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    final manager = Provider.of<StateManager>(context);
 
     return SizedBox(
       width: width,
@@ -31,13 +31,16 @@ class SeeDeletedTaskPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     deletedTasks.remove(taskInfo);
-                    manager.create(
-                      context,
-                      idText: taskInfo.id.toString(),
-                      todoText: taskInfo.todo,
+                    TodoRepository().createTask(
+                      id: taskInfo.id,
+                      todo: taskInfo.todo,
                       isDone: taskInfo.isDone,
-                      descriptionText: taskInfo.description,
+                      description: taskInfo.description,
                     );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TodoStartPage()));
                   },
                   child: const Text("Recover"),
                   style: ElevatedButton.styleFrom(
