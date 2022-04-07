@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/ui/screens/todos_start_page.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/task.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/todo_cubit/cubit/todo_cubit.dart';
 import '../widgets/command_button.dart';
 import '../widgets/text_input.dart';
 

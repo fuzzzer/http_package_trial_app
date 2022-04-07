@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do/logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import 'package:to_do/logic/todo_cubit/cubit/todo_cubit.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/task.dart';
 import 'todos_start_page.dart';

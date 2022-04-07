@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/data/repositories/todo_repository.dart';
 import '../../data/models/task.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/todo_cubit/cubit/todo_cubit.dart';
 
 class ToDoTile extends StatelessWidget {
   final Task taskInfo;

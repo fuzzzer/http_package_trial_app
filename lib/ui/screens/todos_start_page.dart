@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/ui/screens/add_task_page.dart';
 import 'package:to_do/ui/screens/see_task_from_server_page.dart';
 import '../../data/models/task.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/todo_cubit/cubit/todo_cubit.dart';
 import '../widgets/one_todo_tile.dart';
 import '../widgets/start_page_drawer.dart';
 

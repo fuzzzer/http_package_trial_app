@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/ui/screens/todos_start_page.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/todo_cubit/cubit/todo_cubit.dart';
 import '../widgets/command_button.dart';
 import '../widgets/message_dialog.dart';
 import '../widgets/text_input.dart';
