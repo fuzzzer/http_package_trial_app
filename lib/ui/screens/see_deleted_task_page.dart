@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do/logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/task.dart';
+import '../../logic/cubits/todo_modification_cubit copy/todo_modification_cubit.dart';
 import 'todos_start_page.dart';
 
 class SeeDeletedTaskPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class SeeDeletedTaskPage extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: BlocBuilder<TodoCubit, TodoState>(
+      child: BlocBuilder<TodoModificationCubit, TodoModificationState>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -32,19 +32,20 @@ class SeeDeletedTaskPage extends StatelessWidget {
                     height: 5,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.read<TodoCubit>().addTask(
+                        context.read<TodoModificationCubit>().addTask(
                               idText: taskInfo.id.toString(),
                               todoText: taskInfo.todo,
                               isDone: taskInfo.isDone,
                               descriptionText: taskInfo.description,
                             );
                         context
-                            .read<TodoCubit>()
+                            .read<TodoModificationCubit>()
                             .removeTaskFromRecentlyDeleted(taskInfo);
-                        Navigator.push(
-                            context,
+
+                        Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (context) => const TodoStartPage()));
+                                builder: (context) => const TodoStartPage()),
+                            (Route<dynamic> route) => false);
                       },
                       child: const Text("Recover"),
                       style: ElevatedButton.styleFrom(

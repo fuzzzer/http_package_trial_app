@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/ui/screens/todos_start_page.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/cubits/todo_modification_cubit copy/todo_modification_cubit.dart';
 import '../widgets/command_button.dart';
 import '../widgets/message_dialog.dart';
 import '../widgets/text_input.dart';
@@ -32,12 +32,12 @@ class AddTaskPage extends StatelessWidget {
           }
         },
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           appBar: AppBar(
             backgroundColor: Colors.black,
           ),
-          body: BlocBuilder<TodoCubit, TodoState>(builder: (context, state) {
+          body: BlocBuilder<TodoModificationCubit, TodoModificationState>(
+              builder: (context, state) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20),
@@ -64,21 +64,21 @@ class AddTaskPage extends StatelessWidget {
                                     onPressed: () => Navigator.pop(context)));
                           } else {
                             bool idIsAvailable = await context
-                                .read<TodoCubit>()
+                                .read<TodoModificationCubit>()
                                 .checkIdAvailability(idEntered);
                             if (idIsAvailable) {
-                              context.read<TodoCubit>().addTask(
+                              context.read<TodoModificationCubit>().addTask(
                                   idText: idEntered,
                                   todoText: todoInput.inputController.text,
                                   descriptionText:
                                       descriptionInput.inputController.text);
 
                               //navigating to startpage
-                              Navigator.push(
-                                  context,
+                              Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const TodoStartPage()));
+                                          const TodoStartPage()),
+                                  (Route<dynamic> route) => false);
                             } else {
                               // this else statement activates if id is not available
                               showDialog(

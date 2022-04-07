@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/data/repositories/todo_repository.dart';
 import '../../data/models/task.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/cubits/todo_modification_cubit copy/todo_modification_cubit.dart';
 
-class ToDoTile extends StatelessWidget {
+class TodoTile extends StatelessWidget {
   final Task taskInfo;
   final double height;
   final Function onLongPressFunction;
   final Function? checkPress;
   late final bool canBeChecked;
 
-  ToDoTile(
+  TodoTile(
       {Key? key,
       required this.taskInfo,
       this.height = 100,
@@ -28,7 +28,7 @@ class ToDoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TodoCubit(TodoRepository()),
+      create: (context) => TodoModificationCubit(TodoRepository()),
       child: SizedBox(
         height: height,
         child: InkWell(
@@ -52,7 +52,8 @@ class ToDoTile extends StatelessWidget {
                 canBeChecked
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: BlocBuilder<TodoCubit, TodoState>(
+                        child: BlocBuilder<TodoModificationCubit,
+                            TodoModificationState>(
                           builder: (context, state) {
                             return Checkbox(
                                 checkColor: Colors.black,
@@ -61,7 +62,7 @@ class ToDoTile extends StatelessWidget {
                                 value: taskInfo.isDone,
                                 onChanged: (done) {
                                   context
-                                      .read<TodoCubit>()
+                                      .read<TodoModificationCubit>()
                                       .isDoneChanger(taskInfo);
                                 });
                           },

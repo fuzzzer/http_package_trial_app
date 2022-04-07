@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/ui/screens/todos_start_page.dart';
 import 'package:to_do/ui/widgets/text_output.dart';
 import '../../data/models/task.dart';
-import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
+import '../../logic/cubits/todo_modification_cubit copy/todo_modification_cubit.dart';
 import '../widgets/command_button.dart';
 import '../widgets/text_input.dart';
 
@@ -41,7 +41,8 @@ class UpdateTaskPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.black,
           ),
-          body: BlocBuilder<TodoCubit, TodoState>(builder: (context, state) {
+          body: BlocBuilder<TodoModificationCubit, TodoModificationState>(
+              builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Column(
@@ -61,17 +62,17 @@ class UpdateTaskPage extends StatelessWidget {
                       backgroundColor: const Color.fromARGB(210, 118, 159, 108),
                       textColor: const Color.fromARGB(255, 5, 66, 49),
                       onPressedFunction: () {
-                        context.read<TodoCubit>().updateTask(
+                        context.read<TodoModificationCubit>().updateTask(
                               idText: taskInfo.id.toString(),
                               todoText: todoInput.inputController.text,
                               isDone: taskInfo.isDone,
                               descriptionText:
                                   descriptionInput.inputController.text,
                             );
-                        Navigator.push(
-                            context,
+                        Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (context) => const TodoStartPage()));
+                                builder: (context) => const TodoStartPage()),
+                            (Route<dynamic> route) => false);
                       }),
                 ],
               ),

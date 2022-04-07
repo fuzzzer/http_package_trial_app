@@ -1,41 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../data/models/task.dart';
-import '../../../../../data/recently_deleted_database.dart';
-import '../../../../../data/repositories/todo_repository.dart';
+import '../../../data/models/task.dart';
+import '../../../data/recently_deleted_database.dart';
+import '../../../data/repositories/todo_repository.dart';
 
-part 'todo_state.dart';
+part 'todo_modification_state.dart';
 
-class TodoCubit extends Cubit<TodoState> {
-  TodoCubit(this.todoRepository) : super(TodoInitial());
+class TodoModificationCubit extends Cubit<TodoModificationState> {
+  TodoModificationCubit(this.todoRepository) : super(TodoModificationInitial());
 
   final TodoRepository todoRepository;
-
-  void setStateToInitial() {
-    emit(TodoInitial());
-  }
-
-  void loadAllTasks() async {
-    emit(TodoLoading());
-    try {
-      var taskList = await todoRepository.fetchAllTasks();
-      emit(TodoListLoaded(taskList));
-    } on Exception catch (_) {
-      print("load all task error");
-      emit(TodoError());
-    }
-  }
-
-  void loadTask(int id) async {
-    emit(TodoLoading());
-    try {
-      Task taskInfo = await todoRepository.fetchTask(id: id.toString());
-      emit(TodoLoaded(taskInfo));
-    } on Exception catch (_) {
-      print("loadtask error");
-      emit(TodoError());
-    }
-  }
 
   Future<bool> checkIdAvailability(String id) async {
     bool result = false;
@@ -53,16 +27,16 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    emit(TodoLoading());
+    emit(TodoModificationLoading());
     try {
       await todoRepository.createTask(
           id: int.parse(idText),
           todo: todoText,
           isDone: isDone,
           description: descriptionText);
-      emit(TodoInitial());
+      emit(TodoModificationInitial());
     } on Exception catch (_) {
-      emit(TodoError());
+      emit(TodoModificationError());
     }
   }
 
@@ -85,7 +59,7 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    emit(TodoLoading());
+    emit(TodoModificationLoading());
     try {
       await todoRepository.updateTask(
           id: int.parse(idText),
@@ -93,8 +67,7 @@ class TodoCubit extends Cubit<TodoState> {
           isDone: isDone,
           description: descriptionText);
     } on Exception catch (_) {
-      print("update error");
-      emit(TodoError());
+      emit(TodoModificationError());
     }
   }
 

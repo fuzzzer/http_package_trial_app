@@ -20,17 +20,4 @@ class TodoLoaded extends TodoState {
   List<Object> get props => [taskInfo];
 }
 
-class TodoListLoaded extends TodoState {
-  final List<Task> taskList;
-
-  const TodoListLoaded(this.taskList);
-
-  @override
-  List<Object> get props => [taskList];
-}
-
 class TodoError extends TodoState {}
-
-class TodoIsDone extends TodoState {}
-
-class TodoIsNotDone extends TodoState {}

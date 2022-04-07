@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
 import '../../data/models/task.dart';
 import '../screens/see_deleted_task_page.dart';
-import 'one_todo_tile.dart';
+import 'todo_tile.dart';
 
 class StartPageDrawer extends StatelessWidget {
   final double drawerWidthRatio;
@@ -43,7 +43,7 @@ class StartPageDrawer extends StatelessWidget {
                                   Task taskInfo =
                                       deletedTasks[listMemberCoefficient];
                                   return ListTile(
-                                    title: ToDoTile(
+                                    title: TodoTile(
                                       taskInfo: taskInfo,
                                       height: width / 4,
                                       onLongPressFunction: () => Navigator.push(
