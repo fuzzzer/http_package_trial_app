@@ -18,9 +18,7 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   void emitLastPageState() {
-    print("yes");
     emit(_lastState);
-    print(_lastState.toString());
   }
 
   void loadAllTasks() async {

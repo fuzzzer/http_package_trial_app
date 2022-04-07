@@ -69,12 +69,8 @@ class TodoStartPage extends StatelessWidget {
             return const Center(child: Text("it is initial"));
           }
 
-          if (state.toString() == null) {
-            return const Center(
-                child: Text("some state management error occurred"));
-          } else {
-            return Center(child: Text(state.toString()));
-          }
+          return const Center(
+              child: Text("some state management error occurred"));
         },
       ),
     );
