@@ -68,10 +68,10 @@ class UpdateTaskPage extends StatelessWidget {
                               descriptionText:
                                   descriptionInput.inputController.text,
                             );
-                        Navigator.push(
-                            context,
+                        Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (context) => const TodoStartPage()));
+                                builder: (context) => const TodoStartPage()),
+                            (Route<dynamic> route) => false);
                       }),
                 ],
               ),

@@ -11,8 +11,14 @@ class TodoCubit extends Cubit<TodoState> {
 
   final TodoRepository todoRepository;
 
-  void setStateToInitial() {
-    emit(TodoInitial());
+  TodoState _lastState = TodoInitial();
+
+  void setLastState(var state) {
+    _lastState = state;
+  }
+
+  void emitLastState() {
+    emit(_lastState);
   }
 
   void loadAllTasks() async {
@@ -21,7 +27,6 @@ class TodoCubit extends Cubit<TodoState> {
       var taskList = await todoRepository.fetchAllTasks();
       emit(TodoListLoaded(taskList));
     } on Exception catch (_) {
-      print("load all task error");
       emit(TodoError());
     }
   }
@@ -32,7 +37,6 @@ class TodoCubit extends Cubit<TodoState> {
       Task taskInfo = await todoRepository.fetchTask(id: id.toString());
       emit(TodoLoaded(taskInfo));
     } on Exception catch (_) {
-      print("loadtask error");
       emit(TodoError());
     }
   }
@@ -53,7 +57,6 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    emit(TodoLoading());
     try {
       await todoRepository.createTask(
           id: int.parse(idText),
@@ -61,9 +64,7 @@ class TodoCubit extends Cubit<TodoState> {
           isDone: isDone,
           description: descriptionText);
       emit(TodoInitial());
-    } on Exception catch (_) {
-      emit(TodoError());
-    }
+    } on Exception catch (_) {}
   }
 
   void deleteTask(Task taskInfo) {
@@ -85,17 +86,14 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    emit(TodoLoading());
     try {
       await todoRepository.updateTask(
           id: int.parse(idText),
           todo: todoText,
           isDone: isDone,
           description: descriptionText);
-    } on Exception catch (_) {
-      print("update error");
-      emit(TodoError());
-    }
+      emit(TodoInitial());
+    } on Exception catch (_) {}
   }
 
   void isDoneChanger(Task task) {

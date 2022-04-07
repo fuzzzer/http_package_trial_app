@@ -74,11 +74,11 @@ class AddTaskPage extends StatelessWidget {
                                       descriptionInput.inputController.text);
 
                               //navigating to startpage
-                              Navigator.push(
-                                  context,
+                              Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const TodoStartPage()));
+                                          const TodoStartPage()),
+                                  (Route<dynamic> route) => false);
                             } else {
                               // this else statement activates if id is not available
                               showDialog(

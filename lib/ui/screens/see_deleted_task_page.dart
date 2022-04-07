@@ -41,10 +41,10 @@ class SeeDeletedTaskPage extends StatelessWidget {
                         context
                             .read<TodoCubit>()
                             .removeTaskFromRecentlyDeleted(taskInfo);
-                        Navigator.push(
-                            context,
+                        Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (context) => const TodoStartPage()));
+                                builder: (context) => const TodoStartPage()),
+                            (Route<dynamic> route) => false);
                       },
                       child: const Text("Recover"),
                       style: ElevatedButton.styleFrom(
