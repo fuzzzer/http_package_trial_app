@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do/data/respiratoies/todo_repository.dart';
-import 'package:to_do/logic/cubits/cubit/list_tile_task_cubit.dart';
+import 'package:to_do/data/repositories/todo_repository.dart';
 import '../../data/models/task.dart';
+import '../../logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
 
 class ToDoTile extends StatelessWidget {
   final Task taskInfo;
@@ -28,7 +28,7 @@ class ToDoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ListTileTaskCubit(TodoRepository()),
+      create: (context) => TodoCubit(TodoRepository()),
       child: SizedBox(
         height: height,
         child: InkWell(
@@ -52,19 +52,16 @@ class ToDoTile extends StatelessWidget {
                 canBeChecked
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child:
-                            BlocBuilder<ListTileTaskCubit, ListTileTaskState>(
+                        child: BlocBuilder<TodoCubit, TodoState>(
                           builder: (context, state) {
                             return Checkbox(
                                 checkColor: Colors.black,
                                 activeColor:
                                     const Color.fromARGB(200, 149, 219, 153),
-                                value: state is ListTileTaskIsChecked
-                                    ? true
-                                    : false,
+                                value: taskInfo.isDone,
                                 onChanged: (done) {
                                   context
-                                      .read<ListTileTaskCubit>()
+                                      .read<TodoCubit>()
                                       .isDoneChanger(taskInfo);
                                 });
                           },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do/data/repositories/todo_repository.dart';
+import 'package:to_do/logic/cubits/cubit/todo_cubit/cubit/todo_cubit.dart';
 import 'package:to_do/ui/screens/todos_start_page.dart';
 
 void main() {
@@ -11,9 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'modify To do server',
-      home: TodoStartPage(),
+    return BlocProvider(
+      create: (context) => TodoCubit(TodoRepository()),
+      child: const MaterialApp(
+        title: 'modify To do server',
+        home: TodoStartPage(),
+      ),
     );
   }
 }

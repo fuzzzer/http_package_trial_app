@@ -22,7 +22,7 @@ class TextInput extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(7),
       child: SizedBox(
         width: width * 7 / 8,
         height: height * relativeHeight,

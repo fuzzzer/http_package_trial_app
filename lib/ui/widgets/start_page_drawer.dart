@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
 import '../../data/models/task.dart';
 import '../screens/see_deleted_task_page.dart';
-import '../screens/see_task_from_server_page.dart';
 import 'one_todo_tile.dart';
 
 class StartPageDrawer extends StatelessWidget {

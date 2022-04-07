@@ -36,13 +36,12 @@ class TodoRepository {
         isDone: false,
         description: "this is returned because task data was not fetched");
 
-    try {
-      if (response.statusCode == 200) {
-        result = Task.fromJson(response.data);
-      }
-    } catch (error) {
+    if (response.statusCode == 200) {
+      result = Task.fromJson(response.data);
+    } else {
       throw Exception("Failed to fetch task data");
     }
+
     return result;
   }
 
@@ -50,14 +49,11 @@ class TodoRepository {
     final response =
         await _dio.delete('http://$localHost:8080/delete-todo/$id');
 
-    try {
-      if (response.statusCode == 200) {
-        return true;
-      }
-    } catch (error) {
+    if (response.statusCode == 200) {
+      return true;
+    } else {
       throw Exception('Failed to delete Task');
     }
-    return false;
   }
 
   Future<bool> createTask(
@@ -75,15 +71,11 @@ class TodoRepository {
       },
     );
 
-    try {
-      if (response.statusCode == 200) {
-        return true;
-      }
-    } catch (erroe) {
+    if (response.statusCode == 200) {
+      return true;
+    } else {
       throw Exception('Failed to create Task!');
     }
-
-    return false;
   }
 
   Future<bool> updateTask(
@@ -99,13 +91,10 @@ class TodoRepository {
       'description': description,
     });
 
-    try {
-      if (response.statusCode == 200) {
-        return true;
-      }
-    } catch (error) {
+    if (response.statusCode == 200) {
+      return true;
+    } else {
       throw Exception('Failed to update Task');
     }
-    return false;
   }
 }
