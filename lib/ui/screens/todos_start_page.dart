@@ -16,7 +16,9 @@ class TodoStartPage extends StatelessWidget {
       body: BlocBuilder<TodoCubit, TodoState>(
         bloc: context.read<TodoCubit>()..loadAllTasks(),
         builder: (context, state) {
-          if (state is TodoLoading) {
+          if (state is TodoInitial) {
+            return const Center(child: Text("Initial state"));
+          } else if (state is TodoLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TodoListLoaded) {
             return Scaffold(
@@ -34,6 +36,12 @@ class TodoStartPage extends StatelessWidget {
                       taskInfo: taskInfo,
                       height: 85,
                       onLongPressFunction: () {
+                        //1) --------with this code you can save last state------
+                        // context
+                        //     .read<TodoCubit>()
+                        //     .setLastPageState(TodoListLoaded(state.taskList));
+                        //----------------------------------------------------
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -60,8 +68,13 @@ class TodoStartPage extends StatelessWidget {
           } else if (state is TodoInitial) {
             return const Center(child: Text("it is initial"));
           }
-          return const Center(
-              child: Text("some state management error occurred"));
+
+          if (state.toString() == null) {
+            return const Center(
+                child: Text("some state management error occurred"));
+          } else {
+            return Center(child: Text(state.toString()));
+          }
         },
       ),
     );

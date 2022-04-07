@@ -29,12 +29,20 @@ class SeeTaskFromServerPage extends StatelessWidget {
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
-                      // with this todo_start_page rebuilds causing more inneficient code,
+                      // You can use any of the following 2 approaches,
+                      // if you use 1st then you have to uncomment complementary section on todo_start_page
+                      // 1) ------with this code screen wont rebuild----
+                      // context.read<TodoCubit>().emitLastPageState();
+                      // Navigator.pop(context);
+                      // -------------------------------------
+
+                      // 2) -----with this todo_start_page rebuilds, sends request to server, causing more loading----,
                       // without custom go back function state was stuck on TodoLoaded
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => const TodoStartPage()),
                           (Route<dynamic> route) => false);
+                      //--------------------------------------
                     },
                   ),
                   actions: <Widget>[

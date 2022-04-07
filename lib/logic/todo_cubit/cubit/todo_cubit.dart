@@ -13,12 +13,14 @@ class TodoCubit extends Cubit<TodoState> {
 
   TodoState _lastState = TodoInitial();
 
-  void setLastState(var state) {
+  void setLastPageState(var state) {
     _lastState = state;
   }
 
-  void emitLastState() {
+  void emitLastPageState() {
+    print("yes");
     emit(_lastState);
+    print(_lastState.toString());
   }
 
   void loadAllTasks() async {
@@ -57,14 +59,11 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    try {
-      await todoRepository.createTask(
-          id: int.parse(idText),
-          todo: todoText,
-          isDone: isDone,
-          description: descriptionText);
-      emit(TodoInitial());
-    } on Exception catch (_) {}
+    await todoRepository.createTask(
+        id: int.parse(idText),
+        todo: todoText,
+        isDone: isDone,
+        description: descriptionText);
   }
 
   void deleteTask(Task taskInfo) {
@@ -86,14 +85,11 @@ class TodoCubit extends Cubit<TodoState> {
     bool isDone = false,
     String descriptionText = "",
   }) async {
-    try {
-      await todoRepository.updateTask(
-          id: int.parse(idText),
-          todo: todoText,
-          isDone: isDone,
-          description: descriptionText);
-      emit(TodoInitial());
-    } on Exception catch (_) {}
+    await todoRepository.updateTask(
+        id: int.parse(idText),
+        todo: todoText,
+        isDone: isDone,
+        description: descriptionText);
   }
 
   void isDoneChanger(Task task) {
