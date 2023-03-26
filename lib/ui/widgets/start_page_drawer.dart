@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:to_do/data/recently_deleted_database.dart';
-import '../../data/models/schedules.dart';
 import '../../data/models/task.dart';
-import 'one_todo_tile.dart';
+import '../screens/see_deleted_task_page.dart';
+import 'todo_tile.dart';
 
 class StartPageDrawer extends StatelessWidget {
   final double drawerWidthRatio;
@@ -13,7 +12,6 @@ class StartPageDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * drawerWidthRatio;
-    final manager = Provider.of<StateManager>(context);
 
     return SizedBox(
         width: width,
@@ -45,12 +43,16 @@ class StartPageDrawer extends StatelessWidget {
                                   Task taskInfo =
                                       deletedTasks[listMemberCoefficient];
                                   return ListTile(
-                                    title: ToDoTile(
+                                    title: TodoTile(
                                       taskInfo: taskInfo,
                                       height: width / 4,
-                                      onLongPressFunction: () =>
-                                          manager.goToSeeDeletedTaskPage(
-                                              context, taskInfo),
+                                      onLongPressFunction: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SeeDeletedTaskPage(
+                                                    taskInfo: taskInfo),
+                                          )),
                                       checkPress: null,
                                     ),
                                   );
